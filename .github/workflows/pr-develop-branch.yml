@@ -145,6 +145,9 @@ jobs:
             # This helps reducing deployment times
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
+                  sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output .
+                  echo "--- package.xml generated with added and modified metadata ---"
+                  cat package/package.xml 
                   mkdir changed-sources
                   sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/ --loglevel trace
                   echo "--- package.xml generated with added and modified metadata ---"
